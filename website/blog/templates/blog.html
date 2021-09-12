@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .post-body img {
+  width : 100%
+  }
+</style>
+<body>
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">{{blogger.title}}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="#">{{blogger.Autor}}</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on date</p>
+
+        <a href="#">Update</a>
+        <a href="#">Delete</a>
+
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="{{blogger.thum.url}}" alt="">
+
+        <div class="post-body">
+        <hr>
+
+        {{blogger.deskripsi}}
+
+        <hr>
+        </div>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+             <form method="POST" action=".">
+              {% csrf_token %}
+              <div class="form-group">
+                {{ forms }}
+              </div>
+              <button type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary">Login to Comment</a>
+
+
+        <!-- Single Comment -->
+          {%for comment in  blogger.get_comments%}
+          <div class="media mb-4">
+           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+             <div class="media-body">
+                <h5 class="mt-0">{{comment.user.username}}</h5>
+                            {{comment.content}}
+             </div>
+               {%endfor%}
+
+        </div>
+
+      <!-- Sidebar Widgets Column -->
+        <      <div class="col-md-4">
+
+          <!-- Search Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+             <div class="widget search">
+              <form action="" class="search-form">
+                  <div class="form-group">
+                  <input type="text" name="q" placeholder="What are you looking for?">
+                  <button type="submit" class="submit">Go</button>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Side Widget</h5>
+            <div class="card-body">
+              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'myblog/blog-post/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'myblog/blog-post/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+{% endblock content %}
